@@ -98,6 +98,24 @@ public class Review {
     }
   }
   
+  // finds the total sentiment value of a review
+  public static double totalSentiment(String fileName)
+  {
+    String review = textToString(fileName);
+    double total = 0.0;
+
+    while (review.indexOf(" ") > 0)
+    {
+      int space = review.indexOf(" ");
+      String word = review.substring(0, space);
+      double sentiment = sentimentVal(word);
+      total += sentiment;
+      review = review.substring(space+1);
+
+    }
+    return total;
+  }
+
   /**
    * Returns the ending punctuation of a string, or the empty string if there is none 
    */
@@ -162,4 +180,38 @@ public class Review {
       return randomNegativeAdj();
     }
   }
+
+  public static int starRating(String fileName)
+  {
+
+    double totalSentiment = totalSentiment(fileName);
+    if (totalSentiment < 15) 
+    {
+      if (totalSentiment < 10)
+      {
+        if (totalSentiment < 5)
+        {
+          if (totalSentiment < 0)
+          {
+            return 2;
+          }
+          return 3;
+        }
+        return 4;
+      }
+      return 5;
+    }
+    else
+    {
+      return 1;
+    }
+
+
+
+
+  }
+
+
+
+
 }
