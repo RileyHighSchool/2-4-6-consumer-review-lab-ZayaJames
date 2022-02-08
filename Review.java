@@ -205,12 +205,33 @@ public class Review {
     {
       return 1;
     }
-
-
-
-
   }
 
+  public static String fakeReview(String fileName)
+  {
+    // turns the review into a usable string
+    String review = textToString(fileName);
+
+    // placeholder for new string
+    String newReview = "";
+
+    // interates through the string to find positive or negative adjectives
+    while (review.indexOf("*") > 0 && review.length() > 0)
+    {
+      // Finds a "*"
+      int startLoc = review.indexOf("*");
+      // copies over everything before the *
+      newReview += review.substring(0, startLoc);
+      // adds a random adjective to the new review
+      newReview += randomAdjective();
+      // removes the previous adjective
+      int spaceAfterStar = review.indexOf(" ", startLoc);
+      review = review.substring(spaceAfterStar);
+    }
+    newReview += review;
+
+    return newReview;
+  }
 
 
 
