@@ -207,7 +207,7 @@ public class Review {
     }
   }
 
-  public static String fakeReview(String fileName)
+  public static String fakeReview(String fileName, String posNegative, String posPositive)
   {
     // turns the review into a usable string
     String review = textToString(fileName);
@@ -233,6 +233,97 @@ public class Review {
     return newReview;
   }
 
+  public static String positiveReview(String fileName)
+  {
+    // turns review into a usable string in this method
+    String review = textToString(fileName);
+    
+    // placeholder for new string
+    String goodReview = "";
 
+    // interates through the string to find adjectives
+    while (review.indexOf("*") > 0 && review.length() > 0)
+    {
+      // Finds a "*"
+      int startLoc = review.indexOf("*");
+      // copies over everything before the *
+      goodReview += review.substring(0, startLoc);
+      // adds a random positive adjective to the new review
+      goodReview += randomPositiveAdj();
+      // removes the previous adjective
+      int spaceAfterStar = review.indexOf(" ", startLoc);
+      review = review.substring(spaceAfterStar);
+    }
+    goodReview += review;
+
+    return goodReview;
+  }
+
+  public static String negativeReview(String fileName)
+  {
+    // turns review into a usable string in this method
+    String review = textToString(fileName);
+    
+    // placeholder for new string
+    String badReview = "";
+
+    // interates through the string to find adjectives
+    while (review.indexOf("*") > 0 && review.length() > 0)
+    {
+      // Finds a "*"
+      int startLoc = review.indexOf("*");
+      // copies over everything before the *
+      badReview += review.substring(0, startLoc);
+      // adds a random negative adjective to the new review
+      badReview += randomNegativeAdj();
+      // removes the previous adjective
+      int spaceAfterStar = review.indexOf(" ", startLoc);
+      review = review.substring(spaceAfterStar);
+    }
+    badReview += review;
+
+    return badReview;
+  }
+
+  public static void comparison(String fileName, double fileName)
+  {
+    // turns review into a usable string in this method
+    String review = textToString(fileName);
+    
+     // holds the zero to replace all "o"s
+     String zero = "0";
+    
+     // template for final review
+     String zeroedReview = "";
+
+    // gets both of the sentiment values of the bad review and the good review
+    double badVal = negativeReview(badReview).sentimentVal;
+    double goodVal = positiveReview(goodReview).sentimentVal;
+    
+    // calculates the difference in sentiment value between the two
+    double difference = goodVal - badVal;
+
+    // interates through the string to find "o"s
+    while (review.indexOf("o") > 0 && review.length() > 0)
+    {
+      // Finds an o
+      int startLoc = review.indexOf("o");
+      // copies over everything before the o
+      zeroedReview += review.substring(0, startLoc);
+      // adds a 0 to the string
+      zeroedReview += zero;
+      // removes the o
+      int spaceAfterO = review.indexOf(" ", startLoc);
+      review = review.substring(spaceAfterO);
+    }
+    zeroedReview += review;
+
+    System.out.println(zeroedReview);
+    System.out.println(difference);
+
+  }
 
 }
+
+
+

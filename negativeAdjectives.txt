@@ -1,1 +1,10 @@
- 
+ *dirty
+ *old
+ *slimy
+ *sticky
+ *chewy
+ *hard
+ *difficult
+ *unorderly
+ *rude
+ *slow
