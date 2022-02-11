@@ -37,7 +37,7 @@ public class Review {
       Scanner input = new Scanner(new File("positiveAdjectives.txt"));
       while(input.hasNextLine()){
         String temp = input.nextLine().trim();
-        System.out.println(temp);
+        // System.out.println(temp);
         posAdjectives.add(temp);
       }
       input.close();
@@ -285,7 +285,24 @@ public class Review {
     return badReview;
   }
 
-  public static void comparison(String fileName, double fileName)
+  public static double totalSentiment2(String review)
+  {
+    double total = 0.0;
+
+    while (review.indexOf(" ") > 0)
+    {
+      int space = review.indexOf(" ");
+      String word = review.substring(0, space);
+      double sentiment = sentimentVal(word);
+      total += sentiment;
+      review = review.substring(space+1);
+
+    }
+    return total;
+  }
+  
+  
+  public static void comparison(String fileName)
   {
     // turns review into a usable string in this method
     String review = textToString(fileName);
@@ -297,9 +314,12 @@ public class Review {
      String zeroedReview = "";
 
     // gets both of the sentiment values of the bad review and the good review
-    double badVal = negativeReview(badReview).sentimentVal;
-    double goodVal = positiveReview(goodReview).sentimentVal;
-    
+    double badVal = totalSentiment2(negativeReview(fileName));
+    double goodVal = totalSentiment2(positiveReview(fileName));
+
+    System.out.println("Positive Value: " + goodVal);
+    System.out.println("Negative Value: " + badVal);
+
     // calculates the difference in sentiment value between the two
     double difference = goodVal - badVal;
 
@@ -313,13 +333,12 @@ public class Review {
       // adds a 0 to the string
       zeroedReview += zero;
       // removes the o
-      int spaceAfterO = review.indexOf(" ", startLoc);
-      review = review.substring(spaceAfterO);
+      review = review.substring(startLoc + 1);
     }
     zeroedReview += review;
 
     System.out.println(zeroedReview);
-    System.out.println(difference);
+    System.out.println("Sentiment difference: " + difference);
 
   }
 
